@@ -6,6 +6,7 @@
 
 html {
     font-family: 'Roboto', sans-serif;
+    margin-left: 25dvw;
 }
 
 .centered {
@@ -27,6 +28,11 @@ h1 {
 h2 {
     font-size: 1.8rem;
     font-weight: 500;
+}
+
+h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 span {
@@ -56,4 +62,29 @@ button {
         background: #005bb5;
         box-shadow: 0 0 4px grey;
     }
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+a {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.ico {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.dashboard-content {
+    padding: 2rem;
+    justify-content: flex-start;
+    align-items: start;
 }

@@ -1,0 +1,21 @@
+<section class="navbar centered">
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="projects" routerLinkActive="active">Proyectos</a>
+            </li>
+            <li>
+                <a routerLink="tasks" routerLinkActive="active">Tareas</a>
+            </li>
+            <li>
+                <a routerLink="employees" routerLinkActive="active">Empleados</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="navbar__user centered">
+        <img class="ico" (click)="logout()" src="/assets/logout.png" alt="Cerrar sesión">
+        <img class="navbar__user__profile" src="/assets/admin.jpg" alt="admin">
+    </div>
+
+</section>

@@ -1,2 +1,9 @@
-<p>dashboard works!</p>
-<button (click)="logout()">Logout</button>
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <app-navbar></app-navbar>
+
+  <main class="dashboard-content centered">
+    <router-outlet></router-outlet>
+  </main>
+</div>

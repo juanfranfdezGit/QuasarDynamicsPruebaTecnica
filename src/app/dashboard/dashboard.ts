@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { Sidebar } from './sidebar/sidebar';
+import { Navbar } from './navbar/navbar';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [ Sidebar, Navbar, RouterOutlet ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })

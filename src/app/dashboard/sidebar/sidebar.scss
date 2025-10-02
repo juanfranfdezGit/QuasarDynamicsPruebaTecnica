@@ -1,0 +1,41 @@
+.sidebar {
+    width: 25dvw;
+    height: 100dvh;
+    padding: 3rem 2rem;
+    box-shadow: 0 0 4px black;
+    gap: 2rem;
+    justify-content: flex-start;
+    align-items: start;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &__logo {
+        width: 100%;
+        height: auto;
+    }
+
+    &__userBio {
+        gap: 1rem;
+        padding: 2rem;
+        box-shadow: 0 0 4px black;
+        border-radius: 8px;
+        min-width: 100%;
+
+        img {
+            margin-bottom: 1rem;
+            width: 6rem;
+            height: 6rem;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 0 4px black;
+        }
+    }
+
+    &__welcomeMessage {
+        color: #105bbd;
+        line-height: 2rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+}

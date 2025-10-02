@@ -1,0 +1,17 @@
+.navbar {
+    justify-content: space-between;
+    padding: 2rem;
+    box-shadow: 2px 0 4px grey;
+
+    &__user {
+        gap: 2rem;
+
+        &__profile {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 0.5rem;
+        }
+    }
+}
