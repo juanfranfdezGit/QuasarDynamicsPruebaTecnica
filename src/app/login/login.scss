@@ -1,0 +1,32 @@
+.login {
+    width: 100vw;
+    height: 100vh;
+    background: url('/assets/loginBack.jpg') no-repeat center;
+
+    &__form {
+        padding: 4rem;
+        background: white;
+        gap: 3rem;
+        border-radius: 8px;
+        box-shadow: 0 0 16px black;
+
+        &__header {
+            gap: 8px;
+        }
+
+        &__form {
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                width: 24dvw;
+
+                input {
+                    width: 100%;
+                    padding: 4px 12px;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+}
