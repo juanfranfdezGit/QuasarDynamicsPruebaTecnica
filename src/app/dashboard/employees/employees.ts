@@ -21,9 +21,6 @@ export class Employees implements OnInit {
     'Proyectos',
     'Tareas',
     '',
-    '',
-    '',
-    '',
     'Ver',
   ];
 
