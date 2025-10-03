@@ -1,2 +1,24 @@
-<h2>Tareas</h2>
-<app-table [data]="tasks" [columns]="columns"></app-table>
+<div class="centered main__title">
+  <h2>Tareas</h2>
+  <div class="centered main__title__adding" (click)="showModal = true">
+    <p>Añadir Tarea</p>
+    <img src="assets/add.png" alt="add task" class="ico" />
+  </div>
+</div>
+
+<app-table
+  [data]="tasks"
+  [columns]="columns"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+>
+</app-table>
+
+<app-modal-form
+  [visible]="showModal"
+  [fields]="fields"
+  [formData]="newTask"
+  (onSubmit)="saveTask($event)"
+  (onClose)="closeModal()"
+>
+</app-modal-form>

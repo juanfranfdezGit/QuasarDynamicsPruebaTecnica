@@ -1,0 +1,8 @@
+.main__title {
+  justify-content: space-between;
+
+  &__adding {
+    cursor: pointer;
+    gap: 1rem;
+  }
+}

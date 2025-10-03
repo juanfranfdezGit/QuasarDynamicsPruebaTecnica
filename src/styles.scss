@@ -6,7 +6,6 @@
 
 html {
     font-family: 'Roboto', sans-serif;
-    margin-left: 25dvw;
 }
 
 .centered {
@@ -61,6 +60,22 @@ button {
     &:hover {
         background: #005bb5;
         box-shadow: 0 0 4px grey;
+    }
+
+    &.close {
+        background: red;
+        border: 1px solid darkred;
+    }
+
+    &.table-button {
+        background: none;
+        border: none;
+
+        &:hover
+        {
+            background: none;
+            box-shadow: none;
+        }
     }
 }
 

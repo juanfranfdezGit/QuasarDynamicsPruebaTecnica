@@ -1,30 +1,43 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Table } from '../table/table';
+import { EmployeeService } from '../../services/datas/employees.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-employees',
-  imports: [CommonModule, Table],
   templateUrl: './employees.html',
-  styleUrl: './employees.scss'
+  styleUrls: ['./employees.scss'],
+  standalone: true,
+  imports: [Table, HttpClientModule],
 })
-export class Employees {
-  columns = ['Nombre', 'Puesto', 'Fecha Contratacion'];
-  employees = [
-    {
-      Nombre: 'Juan Pérez',
-      Puesto: 'Desarrollador',
-      'Fecha Contratacion': '2023-01-15'
-    },
-    {
-      Nombre: 'María López',
-      Puesto: 'Diseñadora',
-      'Fecha Contratacion': '2022-06-20'
-    },
-    {
-      Nombre: 'Carlos García',
-      Puesto: 'Project Manager',
-      'Fecha Contratacion': '2021-09-10'
-    }
+export class Employees implements OnInit {
+  employees: any[] = [];
+
+  columns = [
+    'ID',
+    'Nombre',
+    'Correo',
+    'Puesto',
+    'Proyectos',
+    'Tareas',
   ];
+
+  constructor(private employeeService: EmployeeService) {}
+
+  ngOnInit() {
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.employeeService
+      .loadEmployees()
+      .subscribe((data) => (this.employees = data));
+  }
+
+  onDelete(employee: any) {
+    if (confirm(`¿Seguro que quieres eliminar "${employee.NombreCompleto}"?`)) {
+      this.employeeService.deleteEmployee(employee.ID);
+      this.loadEmployees();
+    }
+  }
 }

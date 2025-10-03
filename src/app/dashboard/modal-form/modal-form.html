@@ -1,0 +1,37 @@
+<div class="modal-backdrop" *ngIf="visible">
+  <div class="modal-content centered column">
+    <h3>{{ title }}</h3>
+    <form (ngSubmit)="submitForm()">
+      <div class="centered column" *ngFor="let field of fields">
+        <label>{{ field.label }}</label>
+
+        <input
+          *ngIf="field.type === 'text' || field.type === 'date'"
+          [type]="field.type || 'text'"
+          [(ngModel)]="formData[field.key]"
+          [name]="field.key"
+        />
+
+        <div
+          class="checkboxes"
+          *ngIf="field.type === 'checkbox' && field.options"
+        >
+          <label *ngFor="let option of field.options">
+            <input
+              type="checkbox"
+              [name]="field.key"
+              [value]="option.value"
+              (change)="onCheckboxChange($event, field.key)"
+              [checked]="formData[field.key]?.includes(option.value)"
+            />
+            {{ getOptionLabel(field.key, option.value) }}
+          </label>
+        </div>
+      </div>
+      <div class="centered">
+        <button type="submit">Guardar</button>
+        <button type="button" (click)="close()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

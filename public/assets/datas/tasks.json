@@ -1,0 +1,28 @@
+[
+  {
+    "ID": 1,
+    "Título": "Diseñar la interfaz principal",
+    "Descripción": "Crear los mockups de la página principal",
+    "Estado": "En progreso",
+    "Fecha Creacion": "2025-10-01",
+    "Fecha Limite": "2025-10-10",
+    "Empleado Asignado": 1,
+    "Proyecto": 1,
+    "View": "/assets/view.png",
+    "Editar": "/assets/edit.png",
+    "Eliminar": "/assets/delete.png"
+  },
+  {
+    "ID": 2,
+    "Título": "Configurar base de datos",
+    "Descripción": "Preparar la base de datos para el proyecto",
+    "Estado": "Pendiente",
+    "Fecha Creacion": "2025-10-02",
+    "Fecha Limite": "2025-10-15",
+    "Empleado Asignado": 2,
+    "Proyecto": 3,
+    "View": "/assets/view.png",
+    "Editar": "/assets/edit.png",
+    "Eliminar": "/assets/delete.png"
+  }
+]

@@ -1,0 +1,51 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 4rem;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: 800px;
+  
+  h3 {
+    margin-bottom: 30px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    button {
+      margin-right: 1.5rem;
+    }
+
+    .radios {
+      display: flex;
+      flex-wrap: wrap;     
+      gap: 1rem;           
+      align-items: center;
+    }
+
+    .radios label {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;         
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      width: 80%;
+      padding: 4px 8px;
+    }
+  }
+}

@@ -1,2 +1,9 @@
-<h2>Empleados</h2>
-<app-table [data]="employees" [columns]="columns"></app-table>
+<div class="centered main__title">
+  <h2>Empleados</h2>
+</div>
+
+<app-table
+  [data]="employees"
+  [columns]="columns"
+  (delete)="onDelete($event)"
+></app-table>

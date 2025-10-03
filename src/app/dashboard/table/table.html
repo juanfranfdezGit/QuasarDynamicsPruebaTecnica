@@ -1,12 +1,30 @@
 <table>
   <thead>
     <tr>
-      <th *ngFor="let column of columns">{{ column | titlecase }}</th>
+      <th *ngFor="let column of columns; let i = index">
+        <span *ngIf="i < 7">{{ column | titlecase }}</span>
+      </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of data">
-      <td *ngFor="let column of columns">{{ item[column] }}</td>
+      <td *ngFor="let column of columns; let i = index">
+        <ng-container *ngIf="i < 7">
+          {{ isArray(item[column]) ? item[column].join(', ') : item[column] }}
+        </ng-container>
+
+        <ng-container *ngIf="i === 7">
+          <button class="table-button" (click)="onEdit(item)">
+            <img src="assets/edit.png" alt="Editar" width="20" height="20">
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="i === 8">
+          <button class="table-button" (click)="onDelete(item)">
+            <img src="assets/delete.png" alt="Eliminar" width="20" height="20">
+          </button>
+        </ng-container>
+      </td>
     </tr>
   </tbody>
 </table>

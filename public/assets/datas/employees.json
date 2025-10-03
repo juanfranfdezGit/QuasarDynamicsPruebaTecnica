@@ -1,0 +1,29 @@
+[
+  {
+    "ID": 1,
+    "Nombre": "Juan Pérez",
+    "Correo": "juan.perez@empresa.com",
+    "Puesto": "Desarrollador",
+    "Proyectos": [1, 3],
+    "Tareas": [1, 2],
+    "View": "/assets/view.png"
+  },
+  {
+    "ID": 2,
+    "Nombre": "María López",
+    "Correo": "maria.lopez@empresa.com",
+    "Puesto": "Diseñadora",
+    "Proyectos": [1, 2],
+    "Tareas": [3, 1],
+    "View": "/assets/view.png"
+  },
+  {
+    "ID": 3,
+    "Nombre": "Carlos García",
+    "Correo": "carlos.garcia@empresa.com",
+    "Puesto": "Project Manager",
+    "Proyectos": [2, 3],
+    "Tareas": [2, 1],
+    "View": "/assets/view.png"
+  }
+]

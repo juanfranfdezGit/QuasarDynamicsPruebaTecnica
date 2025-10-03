@@ -1,2 +1,23 @@
-<h2>Proyectos</h2>
-<app-table [data]="projects" [columns]="columns"></app-table>
+<div class="centered main__title">
+  <h2>Proyectos</h2>
+  <div class="centered main__title__adding" (click)="showModal = true">
+    <p>Añadir Proyecto</p>
+    <img src="assets/add.png" alt="addding project" class="ico" />
+  </div>
+</div>
+
+<app-table
+  [data]="projects"
+  [columns]="columns"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+></app-table>
+
+<app-modal-form
+  [visible]="showModal"
+  [fields]="fields"
+  [formData]="newProject"
+  (onSubmit)="saveProject($event)"
+  (onClose)="closeModal()"
+>
+</app-modal-form>
