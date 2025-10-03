@@ -39,6 +39,7 @@ export class Projects implements OnInit {
     'FechaFin',
     'Empleados',
     'Tareas',
+    'Ver',
     'Editar',
     'Eliminar',
   ];

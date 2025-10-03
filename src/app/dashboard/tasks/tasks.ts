@@ -37,6 +37,7 @@ export class Tasks implements OnInit {
     'Fecha Limite',
     'Empleado Asignado',
     'Proyecto',
+    'Ver',
     'Editar',
     'Eliminar',
   ];

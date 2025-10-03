@@ -20,6 +20,11 @@ export class Employees implements OnInit {
     'Puesto',
     'Proyectos',
     'Tareas',
+    '',
+    '',
+    '',
+    '',
+    'Ver',
   ];
 
   constructor(private employeeService: EmployeeService) {}

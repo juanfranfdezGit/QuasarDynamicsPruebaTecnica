@@ -13,13 +13,19 @@
           {{ isArray(item[column]) ? item[column].join(', ') : item[column] }}
         </ng-container>
 
-        <ng-container *ngIf="i === 7">
+        <ng-container *ngIf="i === 8">
+          <button class="table-button" (click)="onView(item)">
+            <img src="assets/view.png" alt="Ver" width="20" height="20">
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="i === 9">
           <button class="table-button" (click)="onEdit(item)">
             <img src="assets/edit.png" alt="Editar" width="20" height="20">
           </button>
         </ng-container>
 
-        <ng-container *ngIf="i === 8">
+        <ng-container *ngIf="i === 10">
           <button class="table-button" (click)="onDelete(item)">
             <img src="assets/delete.png" alt="Eliminar" width="20" height="20">
           </button>

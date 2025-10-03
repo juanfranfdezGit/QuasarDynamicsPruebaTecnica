@@ -8,7 +8,7 @@
     "Fecha Limite": "2025-10-10",
     "Empleado Asignado": 1,
     "Proyecto": 1,
-    "View": "/assets/view.png",
+    "Ver": "/assets/view.png",
     "Editar": "/assets/edit.png",
     "Eliminar": "/assets/delete.png"
   },
@@ -21,7 +21,7 @@
     "Fecha Limite": "2025-10-15",
     "Empleado Asignado": 2,
     "Proyecto": 3,
-    "View": "/assets/view.png",
+    "Ver": "/assets/view.png",
     "Editar": "/assets/edit.png",
     "Eliminar": "/assets/delete.png"
   }

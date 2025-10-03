@@ -20,6 +20,14 @@ export class Table {
     return Array.isArray(val);
   }
 
+  onView(item: any) {
+    console.log('Ver detalle de', item);
+    // Aquí puedes abrir tu modal de detalles y pasar `item` como datos
+    // por ejemplo:
+    // this.detailsModalData = item;
+    // this.showDetailsModal = true;
+  }
+
   onEdit(item: any) {
     this.edit.emit(item);
   }
