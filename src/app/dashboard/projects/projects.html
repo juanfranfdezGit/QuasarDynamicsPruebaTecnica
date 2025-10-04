@@ -10,6 +10,7 @@
   [data]="projects"
   [columns]="columns"
   (edit)="onEdit($event)"
+  (view)="onView($event)"
   (delete)="onDelete($event)"
 ></app-table>
 
@@ -21,3 +22,11 @@
   (onClose)="closeModal()"
 >
 </app-modal-form>
+
+<app-modal-details
+  [visible]="showDetailsModal"
+  [title]="'Detalle del Proyecto'"
+  [item]="selectedItem"
+  (close)="closeDetailsModal()"
+>
+</app-modal-details>

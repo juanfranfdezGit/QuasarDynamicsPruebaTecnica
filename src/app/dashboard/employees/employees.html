@@ -6,4 +6,13 @@
   [data]="employees"
   [columns]="columns"
   (delete)="onDelete($event)"
+  (view)="onView($event)"
 ></app-table>
+
+<app-modal-details
+  [visible]="showDetailsModal"
+  [title]="'Detalle de la Tarea'"
+  [item]="selectedItem"
+  (close)="closeDetailsModal()"
+>
+</app-modal-details>

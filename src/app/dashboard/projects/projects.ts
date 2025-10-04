@@ -5,11 +5,14 @@ import { EmployeeService } from '../../services/datas/employees.service';
 import { TaskService } from '../../services/datas/tasks.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalForm } from '../modal-form/modal-form';
+import { ModalDetailsComponent } from '../modal-details/modal-details';
+import { CommonModule } from '@angular/common';
 
 interface FieldOption {
   label: string;
   value: any;
 }
+
 interface Field {
   key: string;
   label: string;
@@ -22,11 +25,21 @@ interface Field {
   templateUrl: './projects.html',
   styleUrls: ['./projects.scss'],
   standalone: true,
-  imports: [Table, HttpClientModule, ModalForm],
+  imports: [
+    Table,
+    HttpClientModule,
+    ModalForm,
+    ModalDetailsComponent,
+    CommonModule,
+  ],
 })
 export class Projects implements OnInit {
   showModal = false;
   newProject: any = {};
+
+  showDetailsModal = false;
+  selectedItem: any = null;
+
   projects: any[] = [];
   employees: any[] = [];
   tasks: any[] = [];
@@ -127,6 +140,31 @@ export class Projects implements OnInit {
   closeModal() {
     this.showModal = false;
     this.newProject = {};
+  }
+
+  onView(item: any) {
+    const empleadosNombres = (item.Empleados || [])
+      .map((id: number) => this.employees.find((e) => e.ID === id)?.Nombre)
+      .filter(Boolean);
+
+    const tareasTitulos = (item.Tareas || [])
+      .map((id: number) => this.tasks.find((t) => t.ID === id)?.Título)
+      .filter(Boolean);
+
+    this.selectedItem = {
+      ...item,
+      Empleados: empleadosNombres,
+      Tareas: tareasTitulos,
+    };
+
+    console.log('selectedItem', this.selectedItem);
+
+    this.showDetailsModal = true;
+  }
+
+  closeDetailsModal() {
+    this.showDetailsModal = false;
+    this.selectedItem = null;
   }
 
   onEdit(item: any) {

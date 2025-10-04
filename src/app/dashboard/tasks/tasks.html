@@ -11,7 +11,9 @@
   [columns]="columns"
   (edit)="onEdit($event)"
   (delete)="onDelete($event)"
+  (view)="onView($event)"
 >
+  >
 </app-table>
 
 <app-modal-form
@@ -22,3 +24,11 @@
   (onClose)="closeModal()"
 >
 </app-modal-form>
+
+<app-modal-details
+  [visible]="showDetailsModal"
+  [title]="'Detalle de la Tarea'"
+  [item]="selectedItem"
+  (close)="closeDetailsModal()"
+>
+</app-modal-details>

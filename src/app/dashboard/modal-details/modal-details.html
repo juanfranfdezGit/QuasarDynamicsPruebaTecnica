@@ -1,0 +1,19 @@
+<div class="modal__backdrop" *ngIf="visible">
+  <div class="modal__backdrop__content centered column">
+    <h3>{{ title }}</h3>
+
+    <div class="modal__backdrop__content__list">
+      <div
+        class="modal__backdrop__content__list__row"
+        *ngFor="let key of objectKeys(item) | slice : 0 : -3"
+      >
+        <strong>{{ key | titlecase }}:</strong>
+        <span>{{ formatValue(item[key]) }}</span>
+      </div>
+    </div>
+
+    <div class="centered">
+      <button type="button" (click)="onClose()">Cerrar</button>
+    </div>
+  </div>
+</div>

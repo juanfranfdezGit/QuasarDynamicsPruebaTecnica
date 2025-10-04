@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './modal-form.html',
   styleUrl: './modal-form.scss',
 })
+
 export class ModalForm {
   @Input() visible = false;
   @Input() title = 'Formulario';

@@ -16,16 +16,14 @@ export class Table {
   @Output() delete = new EventEmitter<any>();
   @Output() rowClick = new EventEmitter<any>();
 
+  @Output() view = new EventEmitter<any>();
+
   isArray(val: any) {
     return Array.isArray(val);
   }
 
   onView(item: any) {
-    console.log('Ver detalle de', item);
-    // Aquí puedes abrir tu modal de detalles y pasar `item` como datos
-    // por ejemplo:
-    // this.detailsModalData = item;
-    // this.showDetailsModal = true;
+    this.view.emit(item);
   }
 
   onEdit(item: any) {

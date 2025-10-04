@@ -4,6 +4,8 @@ import { TaskService } from '../../services/datas/tasks.service';
 import { EmployeeService } from '../../services/datas/employees.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalForm } from '../modal-form/modal-form';
+import { CommonModule } from '@angular/common';
+import { ModalDetailsComponent } from '../modal-details/modal-details';
 
 interface FieldOption {
   label: string;
@@ -21,11 +23,15 @@ interface Field {
   templateUrl: './tasks.html',
   styleUrls: ['./tasks.scss'],
   standalone: true,
-  imports: [Table, HttpClientModule, ModalForm],
+  imports: [Table, HttpClientModule, ModalForm, CommonModule, ModalDetailsComponent],
 })
 export class Tasks implements OnInit {
   tasks: any[] = [];
   showModal = false;
+
+  showDetailsModal = false;
+  selectedItem: any = null;
+
   newTask: any = {};
   employees: any[] = [];
 
@@ -111,6 +117,31 @@ export class Tasks implements OnInit {
   closeModal() {
     this.showModal = false;
     this.newTask = {};
+  }
+
+  onView(task: any) {
+    const empleadosNombres = (task.EmpleadoAsignado || [])
+      .map((id: number | any) => {
+        if (typeof id === 'number') {
+          return this.employees.find((e) => e.ID === id)?.Nombre;
+        }
+        return id?.Nombre ?? id;
+      })
+      .filter(Boolean);
+
+    this.selectedItem = {
+      ...task,
+      EmpleadoAsignado: empleadosNombres,
+    };
+
+    console.log('selectedItem', this.selectedItem);
+
+    this.showDetailsModal = true;
+  }
+
+  closeDetailsModal() {
+    this.showDetailsModal = false;
+    this.selectedItem = null;
   }
 
   onEdit(task: any) {
