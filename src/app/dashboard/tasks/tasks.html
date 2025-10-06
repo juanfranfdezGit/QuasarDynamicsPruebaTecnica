@@ -6,19 +6,18 @@
   </div>
 </div>
 
-<app-table
-  [data]="tasks"
-  [columns]="columns"
-  (edit)="onEdit($event)"
-  (delete)="onDelete($event)"
-  (view)="onView($event)"
->
-  >
-</app-table>
+<app-task-table
+  [tasks]="tasks"
+  [employees]="employees"
+  [estados]="estados"
+  (editTask)="onEdit($event)"
+  (deleteTask)="onDelete($event)"
+  (viewTask)="onView($event)"
+  (changeEstado)="cambiarEstado($event.task, $event.estado)"
+></app-task-table>
 
 <app-modal-form
   [visible]="showModal"
-  [fields]="fields"
   [formData]="newTask"
   (onSubmit)="saveTask($event)"
   (onClose)="closeModal()"

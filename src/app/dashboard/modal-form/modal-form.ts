@@ -9,16 +9,17 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './modal-form.html',
   styleUrl: './modal-form.scss',
 })
-
 export class ModalForm {
   @Input() visible = false;
   @Input() title = 'Formulario';
+
   @Input() fields: {
     key: string;
     label: string;
     type?: string;
     options?: { label: string; value: any }[];
   }[] = [];
+
   @Input() formData: any = {};
 
   @Output() onSubmit = new EventEmitter<any>();

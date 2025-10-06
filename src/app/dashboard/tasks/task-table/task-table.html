@@ -1,0 +1,49 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Estado</th>
+      <th>Fecha Creación</th>
+      <th>Fecha Límite</th>
+      <th>Empleado Asignado</th>
+      <th>Proyecto</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{ task.ID }}</td>
+      <td>{{ task.Titulo }}</td>
+      <td>
+        <select
+          [(ngModel)]="task.Estado"
+          (change)="onChangeEstado(task, task.Estado)"
+        >
+          <option *ngFor="let est of estados" [value]="est">{{ est }}</option>
+        </select>
+      </td>
+      <td>{{ task.FechaCreacion | date }}</td>
+      <td>{{ task.FechaLimite | date }}</td>
+      <td>{{ getEmpleadosNombre(task) }}</td>
+      <td>{{ task.Proyecto }}</td>
+      <td>
+        <button (click)="onView(task)">
+          <img src="assets/view.png" width="20" height="20" />
+        </button>
+      </td>
+      <td>
+        <button (click)="onEdit(task)">
+          <img src="assets/edit.png" width="20" height="20" />
+        </button>
+      </td>
+      <td>
+        <button (click)="onDelete(task)">
+          <img src="assets/delete.png" width="20" height="20" />
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

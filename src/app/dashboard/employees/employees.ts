@@ -1,33 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Table } from '../table/table';
 import { EmployeeService } from '../../services/datas/employees.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ModalDetailsComponent } from '../modal-details/modal-details';
+import { ModalForm } from '../modal-form/modal-form';
+import { EmployeesTable } from './employees-table/employees-table';
 
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.html',
   styleUrls: ['./employees.scss'],
   standalone: true,
-  imports: [Table, HttpClientModule, CommonModule, ModalDetailsComponent],
+  imports: [HttpClientModule, ModalForm, CommonModule, ModalDetailsComponent, EmployeesTable],
 })
 export class Employees implements OnInit {
   employees: any[] = [];
+  showModal = false;
+  newEmployee: any = {};
 
   showDetailsModal = false;
   selectedItem: any = null;
-
-  columns = [
-    'ID',
-    'Nombre',
-    'Correo',
-    'Puesto',
-    'Proyectos',
-    'Tareas',
-    '',
-    'Ver',
-  ];
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -41,24 +33,37 @@ export class Employees implements OnInit {
       .subscribe((data) => (this.employees = data));
   }
 
-  onView(task: any) {
-    const empleadosNombres = (task.EmpleadoAsignado || [])
-      .map((id: number | any) => {
-        if (typeof id === 'number') {
-          return this.employees.find((e) => e.ID === id)?.Nombre;
-        }
-        return id?.Nombre ?? id;
-      })
-      .filter(Boolean);
+  onView(employee: any) {
+    this.selectedItem = { ...employee };
+    this.showDetailsModal = true;
+  }
 
-    this.selectedItem = {
-      ...task,
-      EmpleadoAsignado: empleadosNombres,
+  onEdit(employee: any) {
+    this.showModal = true;
+    this.newEmployee = { ...employee };
+  }
+
+  saveEmployee(employee: any) {
+    const empleadoFinal = {
+      ...employee,
+      Proyectos: employee.Proyectos ?? [],
+      Tareas: employee.Tareas ?? [],
     };
 
-    console.log('selectedItem', this.selectedItem);
+    if (employee.ID) {
+      this.employeeService.editEmployee(employee.ID, empleadoFinal);
+    } else {
+      empleadoFinal.ID = this.employees.length + 1;
+      this.employeeService.addEmployee(empleadoFinal);
+    }
 
-    this.showDetailsModal = true;
+    this.loadEmployees();
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.newEmployee = {};
   }
 
   closeDetailsModal() {
@@ -67,7 +72,7 @@ export class Employees implements OnInit {
   }
 
   onDelete(employee: any) {
-    if (confirm(`¿Seguro que quieres eliminar "${employee.NombreCompleto}"?`)) {
+    if (confirm(`¿Seguro que quieres eliminar "${employee.Nombre}"?`)) {
       this.employeeService.deleteEmployee(employee.ID);
       this.loadEmployees();
     }

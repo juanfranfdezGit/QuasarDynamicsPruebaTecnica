@@ -1,24 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Table } from '../table/table';
 import { ProjectService } from '../../services/datas/projects.service';
 import { EmployeeService } from '../../services/datas/employees.service';
 import { TaskService } from '../../services/datas/tasks.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { ModalForm } from '../modal-form/modal-form';
 import { ModalDetailsComponent } from '../modal-details/modal-details';
-import { CommonModule } from '@angular/common';
-
-interface FieldOption {
-  label: string;
-  value: any;
-}
-
-interface Field {
-  key: string;
-  label: string;
-  type?: string;
-  options?: FieldOption[];
-}
+import { ProjectsTable } from './projects-table/projects-table';
 
 @Component({
   selector: 'app-projects',
@@ -26,50 +14,23 @@ interface Field {
   styleUrls: ['./projects.scss'],
   standalone: true,
   imports: [
-    Table,
     HttpClientModule,
+    CommonModule,
     ModalForm,
     ModalDetailsComponent,
-    CommonModule,
+    ProjectsTable,
   ],
 })
 export class Projects implements OnInit {
+  projects: any[] = [];
+  employees: any[] = [];
+  tasks: any[] = [];
+
   showModal = false;
   newProject: any = {};
 
   showDetailsModal = false;
   selectedItem: any = null;
-
-  projects: any[] = [];
-  employees: any[] = [];
-  tasks: any[] = [];
-
-  columns = [
-    'ID',
-    'Nombre',
-    'Descripcion',
-    'FechaInicio',
-    'FechaFin',
-    'Empleados',
-    'Tareas',
-    'Ver',
-    'Editar',
-    'Eliminar',
-  ];
-
-  fields: Field[] = [
-    { key: 'Nombre', label: 'Nombre', type: 'text' },
-    { key: 'Descripcion', label: 'Descripción', type: 'text' },
-    { key: 'FechaInicio', label: 'Fecha de inicio', type: 'date' },
-    { key: 'FechaFin', label: 'Fecha estimada', type: 'date' },
-    {
-      key: 'Empleados',
-      label: 'Asignar Empleado',
-      type: 'checkbox',
-      options: [],
-    },
-    { key: 'Tareas', label: 'Asignar Tarea', type: 'checkbox', options: [] },
-  ];
 
   constructor(
     private projectService: ProjectService,
@@ -78,87 +39,43 @@ export class Projects implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.projectService.loadProjects().subscribe((data) => {
-      this.projects = data;
-    });
+    this.loadEmployees();
+    this.loadTasks();
+    this.loadProjects();
+  }
 
+  loadEmployees() {
     this.employeeService.loadEmployees().subscribe((emps) => {
       this.employees = emps;
-      this.updateFieldOptions();
     });
+  }
 
+  loadTasks() {
     this.taskService.loadTasks().subscribe((tasks) => {
       this.tasks = tasks;
-      this.updateFieldOptions();
     });
   }
 
-  updateFieldOptions() {
-    this.fields = this.fields.map((f): Field => {
-      if (f.key === 'Empleados') {
-        return {
-          ...f,
-          options: this.employees.map((e) => ({
-            label: e.Nombre,
-            value: e.ID,
-          })),
-        };
-      }
-      if (f.key === 'Tareas') {
-        return {
-          ...f,
-          options: this.tasks.map((t) => ({
-            label: t.Título,
-            value: t.ID,
-          })),
-        };
-      }
-      return f;
+  loadProjects() {
+    this.projectService.loadProjects().subscribe((data) => {
+      this.projects = data.map((p) => ({
+        ...p,
+        Empleados: (p.Empleados || []).map(
+          (id: number) => this.employees.find((e) => e.ID === id)?.Nombre ?? ''
+        ),
+        Tareas: (p.Tareas || []).map(
+          (id: number) => this.tasks.find((t) => t.ID === id)?.Título ?? ''
+        ),
+      }));
     });
   }
 
-  saveProject(project: any) {
-    if (!project.Nombre) return;
-
-    const proyectoFinal = {
-      ...project,
-      Empleados: Array.isArray(project.Empleados) ? project.Empleados : [],
-      Tareas: Array.isArray(project.Tareas) ? project.Tareas : [],
-    };
-
-    if (project.ID) {
-      this.projectService.editProject(project.ID, proyectoFinal);
-    } else {
-      proyectoFinal.ID = this.projects.length + 1;
-      this.projectService.addProject(proyectoFinal);
-    }
-
-    this.projects = [...this.projectService['projects']];
-    this.closeModal();
-  }
-
-  closeModal() {
-    this.showModal = false;
-    this.newProject = {};
-  }
-
-  onView(item: any) {
-    const empleadosNombres = (item.Empleados || [])
-      .map((id: number) => this.employees.find((e) => e.ID === id)?.Nombre)
-      .filter(Boolean);
-
-    const tareasTitulos = (item.Tareas || [])
-      .map((id: number) => this.tasks.find((t) => t.ID === id)?.Título)
-      .filter(Boolean);
-
+  onView(project: any) {
     this.selectedItem = {
-      ...item,
-      Empleados: empleadosNombres,
-      Tareas: tareasTitulos,
+      ...project,
+      Empleados: (project.Empleados || []).join(', '),
+      Tareas: (project.Tareas || []).join(', '),
     };
-
-    console.log('selectedItem', this.selectedItem);
-
     this.showDetailsModal = true;
   }
 
@@ -167,19 +84,63 @@ export class Projects implements OnInit {
     this.selectedItem = null;
   }
 
-  onEdit(item: any) {
+  onEdit(project: any) {
     this.showModal = true;
     this.newProject = {
-      ...item,
-      Empleados: Array.isArray(item.Empleados) ? item.Empleados : [],
-      Tareas: Array.isArray(item.Tareas) ? item.Tareas : [],
+      ...project,
+      Empleados: project.Empleados || [],
+      Tareas: project.Tareas || [],
     };
   }
 
-  onDelete(item: any) {
-    if (confirm(`¿Seguro que quieres eliminar "${item.Nombre}"?`)) {
-      this.projectService.deleteProject(item.ID);
-      this.projects = [...this.projectService['projects']];
+  saveProject(project: any) {
+    const proyectoFinal = {
+      ...project,
+      Empleados: Array.isArray(project.Empleados) ? project.Empleados : [],
+      Tareas: Array.isArray(project.Tareas) ? project.Tareas : [],
+    };
+
+    if (project.ID) {
+      this.projectService.editProject(project.ID, proyectoFinal);
+      const index = this.projects.findIndex((p) => p.ID === project.ID);
+      if (index !== -1) {
+        this.projects[index] = {
+          ...proyectoFinal,
+          Empleados: proyectoFinal.Empleados.map(
+            (id: number) =>
+              this.employees.find((e) => e.ID === id)?.Nombre ?? ''
+          ),
+          Tareas: proyectoFinal.Tareas.map(
+            (id: number) => this.tasks.find((t) => t.ID === id)?.Título ?? ''
+          ),
+        };
+      }
+    } else {
+      proyectoFinal.ID = this.projects.length + 1;
+      this.projectService.addProject(proyectoFinal);
+      this.projects.push({
+        ...proyectoFinal,
+        Empleados: proyectoFinal.Empleados.map(
+          (id: number) => this.employees.find((e) => e.ID === id)?.Nombre ?? ''
+        ),
+        Tareas: proyectoFinal.Tareas.map(
+          (id: number) => this.tasks.find((t) => t.ID === id)?.Título ?? ''
+        ),
+      });
+    }
+
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.newProject = {};
+  }
+
+  onDelete(project: any) {
+    if (confirm(`¿Seguro que quieres eliminar "${project.Nombre}"?`)) {
+      this.projectService.deleteProject(project.ID);
+      this.projects = this.projects.filter((p) => p.ID !== project.ID);
     }
   }
 }

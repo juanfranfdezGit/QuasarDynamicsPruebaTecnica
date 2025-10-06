@@ -1,0 +1,42 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>Fecha Inicio</th>
+      <th>Fecha Fin</th>
+      <th>Empleados</th>
+      <th>Tareas</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let proj of projects">
+      <td>{{ proj.ID }}</td>
+      <td>{{ proj.Nombre }}</td>
+      <td>{{ proj.Descripcion }}</td>
+      <td>{{ proj.FechaInicio | date : "shortDate" }}</td>
+      <td>{{ proj.FechaFin | date : "shortDate" }}</td>
+      <td>{{ proj.Empleados?.join(", ") }}</td>
+      <td>{{ proj.Tareas?.join(", ") }}</td>
+      <td>
+        <button (click)="onView(proj)">
+          <img src="assets/view.png" width="20" height="20" />
+        </button>
+      </td>
+      <td>
+        <button (click)="onEdit(proj)">
+          <img src="assets/edit.png" width="20" height="20" />
+        </button>
+      </td>
+      <td>
+        <button (click)="onDelete(proj)">
+          <img src="assets/delete.png" width="20" height="20" />
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

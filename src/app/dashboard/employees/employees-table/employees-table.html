@@ -1,0 +1,40 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Puesto</th>
+      <th>Proyectos</th>
+      <th>Tareas</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let emp of employees">
+      <td>{{ emp.ID }}</td>
+      <td>{{ emp.Nombre }}</td>
+      <td>{{ emp.Correo }}</td>
+      <td>{{ emp.Puesto }}</td>
+      <td>{{ emp.Proyectos?.join(', ') }}</td>
+      <td>{{ emp.Tareas?.join(', ') }}</td>
+      <td>
+        <button (click)="onView(emp)">
+          <img src="assets/view.png" width="20" height="20">
+        </button>
+      </td>
+      <td>
+        <button (click)="onEdit(emp)">
+          <img src="assets/edit.png" width="20" height="20">
+        </button>
+      </td>
+      <td>
+        <button (click)="onDelete(emp)">
+          <img src="assets/delete.png" width="20" height="20">
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

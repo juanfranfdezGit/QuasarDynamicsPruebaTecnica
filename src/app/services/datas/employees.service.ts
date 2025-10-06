@@ -25,21 +25,37 @@ export class EmployeeService {
     }
   }
 
-  addEmployee(employee: any) {
-    this.employees.push(employee);
-    localStorage.setItem(this.storageKey, JSON.stringify(this.employees));
+  getEmployees(): any[] {
+    return [...this.employees];
   }
 
-  editEmployeeTasks(id: number, tareas: number[]) {
+  addEmployee(employee: any) {
+    this.employees.push(employee);
+    this.saveToLocalStorage();
+  }
+
+  editEmployee(id: number, updatedData: any) {
     const index = this.employees.findIndex((e) => e.ID === id);
     if (index !== -1) {
-      this.employees[index].TareasAsignadas = tareas;
-      localStorage.setItem(this.storageKey, JSON.stringify(this.employees));
+      this.employees[index] = { ...this.employees[index], ...updatedData };
+      this.saveToLocalStorage();
+    }
+  }
+
+  editEmployeeTasks(id: number, tareas: any[]) {
+    const index = this.employees.findIndex((e) => e.ID === id);
+    if (index !== -1) {
+      this.employees[index].Tareas = tareas;
+      this.saveToLocalStorage();
     }
   }
 
   deleteEmployee(id: number) {
     this.employees = this.employees.filter((e) => e.ID !== id);
+    this.saveToLocalStorage();
+  }
+
+  private saveToLocalStorage() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.employees));
   }
 }

@@ -6,17 +6,15 @@
   </div>
 </div>
 
-<app-table
-  [data]="projects"
-  [columns]="columns"
-  (edit)="onEdit($event)"
+<app-projects-table
+  [projects]="projects"
   (view)="onView($event)"
+  (edit)="onEdit($event)"
   (delete)="onDelete($event)"
-></app-table>
+></app-projects-table>
 
 <app-modal-form
   [visible]="showModal"
-  [fields]="fields"
   [formData]="newProject"
   (onSubmit)="saveProject($event)"
   (onClose)="closeModal()"
