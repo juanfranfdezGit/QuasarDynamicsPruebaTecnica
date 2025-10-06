@@ -20,17 +20,17 @@
       <td>{{ emp.Puesto }}</td>
       <td>{{ emp.Proyectos?.join(', ') }}</td>
       <td>{{ emp.Tareas?.join(', ') }}</td>
-      <td>
+      <td style="width: 40px;">
         <button (click)="onView(emp)">
           <img src="assets/view.png" width="20" height="20">
         </button>
       </td>
-      <td>
+      <td style="width: 40px;">
         <button (click)="onEdit(emp)">
           <img src="assets/edit.png" width="20" height="20">
         </button>
       </td>
-      <td>
+      <td style="width: 40px;">
         <button (click)="onDelete(emp)">
           <img src="assets/delete.png" width="20" height="20">
         </button>

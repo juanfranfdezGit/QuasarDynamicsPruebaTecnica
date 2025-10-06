@@ -5,6 +5,18 @@ import { TaskTable } from './task-table/task-table';
 import { ModalForm } from '../modal-form/modal-form';
 import { ModalDetailsComponent } from '../modal-details/modal-details';
 
+interface FieldOption {
+  label: string;
+  value: any;
+}
+
+interface Field {
+  key: string;
+  label: string;
+  type: string;
+  options?: FieldOption[];
+}
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.html',
@@ -21,6 +33,19 @@ export class Tasks implements OnInit {
   selectedItem: any = null;
 
   estados = ['Pendiente', 'En progreso', 'Finalizada'];
+
+  // Mantener taskFields inicial
+  taskFields: Field[] = [
+    { key: 'Titulo', label: 'Título', type: 'text' },
+    { key: 'Descripción', label: 'Descripción', type: 'text' },
+    { key: 'FechaLimite', label: 'Fecha límite', type: 'date' },
+    {
+      key: 'EmpleadoAsignado',
+      label: 'Asignar Empleado',
+      type: 'checkbox',
+      options: [],
+    },
+  ];
 
   constructor(
     private taskService: TaskService,
@@ -49,28 +74,22 @@ export class Tasks implements OnInit {
     });
   }
 
-  cambiarEstado(task: any, estado: string) {
-    task.Estado = estado;
-    this.taskService.editTask(task.ID, task);
-  }
-
-  onView(task: any) {
-    this.selectedItem = {
-      ...task,
-      EmpleadoAsignado: task.EmpleadoAsignado.map(
-        (id: number) => this.employees.find((e) => e.ID === id)?.Nombre ?? ''
-      ),
-    };
-    this.showDetailsModal = true;
-  }
-
-  closeDetailsModal() {
-    this.showDetailsModal = false;
-    this.selectedItem = null;
-  }
-
   onEdit(task: any) {
     this.newTask = { ...task };
+
+    this.taskFields = this.taskFields.map((f) => {
+      if (f.key === 'EmpleadoAsignado') {
+        return {
+          ...f,
+          options: this.employees.map((e) => ({
+            label: e.Nombre,
+            value: e.ID,
+          })),
+        };
+      }
+      return f;
+    });
+
     this.showModal = true;
   }
 
@@ -104,6 +123,26 @@ export class Tasks implements OnInit {
       this.taskService.deleteTask(task.ID);
       this.tasks = this.tasks.filter((t) => t.ID !== task.ID);
     }
+  }
+
+  onView(task: any) {
+    this.selectedItem = {
+      ...task,
+      EmpleadoAsignado: task.EmpleadoAsignado.map(
+        (id: number) => this.employees.find((e) => e.ID === id)?.Nombre ?? ''
+      ),
+    };
+    this.showDetailsModal = true;
+  }
+
+  closeDetailsModal() {
+    this.showDetailsModal = false;
+    this.selectedItem = null;
+  }
+
+  cambiarEstado(task: any, estado: string) {
+    task.Estado = estado;
+    this.taskService.editTask(task.ID, task);
   }
 
   getEmpleadosNombre(task: any) {

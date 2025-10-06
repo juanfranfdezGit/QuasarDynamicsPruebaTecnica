@@ -19,6 +19,7 @@
 <app-modal-form
   [visible]="showModal"
   [formData]="newTask"
+  [fields]="taskFields"
   (onSubmit)="saveTask($event)"
   (onClose)="closeModal()"
 >

@@ -32,6 +32,20 @@ export class Projects implements OnInit {
   showDetailsModal = false;
   selectedItem: any = null;
 
+  fields: any[] = [
+    { key: 'Nombre', label: 'Nombre', type: 'text' },
+    { key: 'Descripcion', label: 'Descripción', type: 'text' },
+    { key: 'FechaInicio', label: 'Fecha de inicio', type: 'date' },
+    { key: 'FechaFin', label: 'Fecha estimada', type: 'date' },
+    {
+      key: 'Empleados',
+      label: 'Asignar Empleado',
+      type: 'checkbox',
+      options: [],
+    },
+    { key: 'Tareas', label: 'Asignar Tarea', type: 'checkbox', options: [] },
+  ];
+
   constructor(
     private projectService: ProjectService,
     private employeeService: EmployeeService,
@@ -47,12 +61,14 @@ export class Projects implements OnInit {
   loadEmployees() {
     this.employeeService.loadEmployees().subscribe((emps) => {
       this.employees = emps;
+      this.updateFieldOptions();
     });
   }
 
   loadTasks() {
     this.taskService.loadTasks().subscribe((tasks) => {
       this.tasks = tasks;
+      this.updateFieldOptions();
     });
   }
 
@@ -60,13 +76,34 @@ export class Projects implements OnInit {
     this.projectService.loadProjects().subscribe((data) => {
       this.projects = data.map((p) => ({
         ...p,
-        Empleados: (p.Empleados || []).map(
+        EmpleadosNombres: (p.Empleados || []).map(
           (id: number) => this.employees.find((e) => e.ID === id)?.Nombre ?? ''
         ),
-        Tareas: (p.Tareas || []).map(
-          (id: number) => this.tasks.find((t) => t.ID === id)?.Título ?? ''
+        TareasTitulos: (p.Tareas || []).map(
+          (id: number) => this.tasks.find((t) => t.ID === id)?.Titulo ?? ''
         ),
       }));
+    });
+  }
+
+  updateFieldOptions() {
+    this.fields = this.fields.map((f) => {
+      if (f.key === 'Empleados') {
+        return {
+          ...f,
+          options: this.employees.map((e) => ({
+            label: e.Nombre,
+            value: e.ID,
+          })),
+        };
+      }
+      if (f.key === 'Tareas') {
+        return {
+          ...f,
+          options: this.tasks.map((t) => ({ label: t.Título, value: t.ID })),
+        };
+      }
+      return f;
     });
   }
 

@@ -61,3 +61,18 @@ td {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+select.pendiente {
+  background-color: yellow;
+  color: black;
+}
+
+select.en-progreso {
+  background-color: blue;
+  color: white;
+}
+
+select.finalizada {
+  background-color: green;
+  color: white;
+}

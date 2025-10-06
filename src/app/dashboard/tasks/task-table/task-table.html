@@ -19,7 +19,13 @@
       <td>{{ task.Titulo }}</td>
       <td>
         <select
+          style="padding: 4px; border-radius: 4px;"
           [(ngModel)]="task.Estado"
+          [ngClass]="{
+            pendiente: task.Estado === 'Pendiente',
+            'en-progreso': task.Estado === 'En progreso',
+            finalizada: task.Estado === 'Finalizada'
+          }"
           (change)="onChangeEstado(task, task.Estado)"
         >
           <option *ngFor="let est of estados" [value]="est">{{ est }}</option>
@@ -29,17 +35,17 @@
       <td>{{ task.FechaLimite | date }}</td>
       <td>{{ getEmpleadosNombre(task) }}</td>
       <td>{{ task.Proyecto }}</td>
-      <td>
+      <td style="width: 40px">
         <button (click)="onView(task)">
           <img src="assets/view.png" width="20" height="20" />
         </button>
       </td>
-      <td>
+      <td style="width: 40px">
         <button (click)="onEdit(task)">
           <img src="assets/edit.png" width="20" height="20" />
         </button>
       </td>
-      <td>
+      <td style="width: 40px">
         <button (click)="onDelete(task)">
           <img src="assets/delete.png" width="20" height="20" />
         </button>

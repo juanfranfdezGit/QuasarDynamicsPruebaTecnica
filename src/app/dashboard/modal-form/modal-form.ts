@@ -35,7 +35,7 @@ export class ModalForm {
     if (fieldKey === 'Tareas') {
       const tareas = JSON.parse(localStorage.getItem('tasks') || '[]');
       const task = tareas.find((t: any) => t.ID == value);
-      return task ? task.Título : value;
+      return task ? task.Titulo : value;
     }
 
     return value;
@@ -46,9 +46,12 @@ export class ModalForm {
       this.formData[key] = [];
     }
 
-    const value = event.target.value;
+    const value = Number(event.target.value);
+
     if (event.target.checked) {
-      this.formData[key].push(value);
+      if (!this.formData[key].includes(value)) {
+        this.formData[key].push(value);
+      }
     } else {
       this.formData[key] = this.formData[key].filter((v: any) => v !== value);
     }

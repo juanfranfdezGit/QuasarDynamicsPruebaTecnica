@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 })
 export class ProjectsTable {
   @Input() projects: any[] = [];
+  @Input() employees: any[] = [];
+  @Input() tasks: any[] = [];
 
   @Output() view = new EventEmitter<any>();
   @Output() edit = new EventEmitter<any>();
@@ -25,5 +27,19 @@ export class ProjectsTable {
 
   onDelete(project: any) {
     this.delete.emit(project);
+  }
+
+    getEmpleadosNombre(project: any) {
+    return (project.Empleados || [])
+      .map((id: number) => this.employees.find((e) => e.ID === id)?.Nombre)
+      .filter(Boolean)
+      .join(', ');
+  }
+
+  getTareasTitulo(project: any) {
+    return (project.Tareas || [])
+      .map((id: number) => this.tasks.find((t) => t.ID === id)?.Título)
+      .filter(Boolean)
+      .join(', ');
   }
 }

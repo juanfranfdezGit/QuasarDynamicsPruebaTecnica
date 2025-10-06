@@ -20,19 +20,19 @@
       <td>{{ proj.Descripcion }}</td>
       <td>{{ proj.FechaInicio | date : "shortDate" }}</td>
       <td>{{ proj.FechaFin | date : "shortDate" }}</td>
-      <td>{{ proj.Empleados?.join(", ") }}</td>
-      <td>{{ proj.Tareas?.join(", ") }}</td>
-      <td>
+      <td>{{ proj.EmpleadosNombres?.join(", ") }}</td>
+      <td>{{ proj.TareasTitulos?.join(", ") }}</td>
+      <td style="width: 40px">
         <button (click)="onView(proj)">
           <img src="assets/view.png" width="20" height="20" />
         </button>
       </td>
-      <td>
+      <td style="width: 40px">
         <button (click)="onEdit(proj)">
           <img src="assets/edit.png" width="20" height="20" />
         </button>
       </td>
-      <td>
+      <td style="width: 40px">
         <button (click)="onDelete(proj)">
           <img src="assets/delete.png" width="20" height="20" />
         </button>
